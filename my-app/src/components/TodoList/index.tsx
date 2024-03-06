@@ -1,11 +1,10 @@
-import { nanoid } from "nanoid"
+import { useAppSelector } from "../../store/hooks"
+import { selectTodoItems } from "../../store/todoListSlice"
+import TodoItem from "./TodoItem"
 
 const TodoList = (): JSX.Element => {
-  const mockedList = Array(24).fill({
-    id: () => nanoid(),
-    value: 'asmtasdfasd sdfa sdf asdf asdf'
-  })
-  return <div>{mockedList.map((i) => <div key={i.id}>{i.value}</div>)}</div> 
+  const data = useAppSelector(selectTodoItems)
+  return <div>{data.map((item) => <TodoItem key={item.id} item={item}/>)}</div> 
 }
 
 export default TodoList

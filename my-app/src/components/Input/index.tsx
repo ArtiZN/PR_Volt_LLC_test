@@ -1,8 +1,9 @@
-"use client"
-import { useState } from "react"
+interface Props {
+  value: string
+  setValue: (value: string)=> void
+}
 
-const Input = (): JSX.Element => {
-  const [value, setValue] = useState('')
+const Input = ({value, setValue}: Props): JSX.Element => {
   return <input value={value} onChange={(e) => setValue(e.target.value)}></input>
 }
 
