@@ -20,8 +20,6 @@ const TodoItem = ({item}: Props): JSX.Element => {
     e.stopPropagation()
     dispatch(removeItem(item.id))
   }
-
-  console.log(styles)
   
   return <FlexBox onClick={onToggle} className={styles.row} styles={{ ...item.isDone ? { textDecoration: 'line-through' } : {} }}>
     {item.name}

@@ -1,0 +1,35 @@
+.container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #2B2D42;
+}
+
+.headerItem {
+    align-items: center;
+    display: flex;
+    flex: 0 0 30%;
+    height: 50px;
+    color: #EDF2F4;
+}
+
+.title {
+    justify-content: center;
+    text-transform: uppercase;
+    font-size: large;
+}
+
+.actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-right: 20px;
+    &__item {
+        padding: 4px 8px;
+        border-radius: 8px;
+        cursor: pointer;
+        &--active {
+            background-color: #51547B;
+        }
+    }
+}
