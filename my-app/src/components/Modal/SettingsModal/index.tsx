@@ -19,8 +19,6 @@ const SettingsModal = (props: Props): JSX.Element | null => {
   const [inputValue, setInputValue] = useState(maxValue)
   const [debouncedInputValue, setDebouncedInputValue] = useState(maxValue)
 
-  const [skipRender, setSkipRender] = useState(true)
-
   useEffect(() => {
     setInputValue(maxValue)
   },[maxValue])
@@ -45,10 +43,10 @@ const SettingsModal = (props: Props): JSX.Element | null => {
   }, [inputValue])
 
   useEffect(() => {
-    if (!skipRender) {
-      dispatch(setMaxLength(debouncedInputValue))
-    } else setSkipRender(false)
-  },[debouncedInputValue, dispatch, skipRender])
+    maxValue !== debouncedInputValue && 
+        dispatch(setMaxLength(debouncedInputValue))
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  },[debouncedInputValue, dispatch])
 
 
   const onHide = (): void => {
