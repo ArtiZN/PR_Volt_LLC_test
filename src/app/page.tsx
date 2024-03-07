@@ -4,13 +4,16 @@ import Header from "../components/Header"
 import Actions from "../components/Actions"
 import FlexBox from "../components/Flexbox"
 import Input from "../components/Input"
-import TodoList from "../components/TodoList"
 import styles from "./page.module.scss"
 import useInitialLoad from "./useInitialLoad"
 import { useAppDispatch, useAppSelector } from "../store/hooks"
-import { addItem, initialLoad, selectMaxLength, setFilters, setMaxLength } from "../store/todoListSlice"
+import { addItem, initialLoad, selectMaxLength, setFilters, setImportance, setMaxLength } from "../store/todoListSlice"
 import { nanoid } from "nanoid"
 import Footer from "../components/Footer"
+import { DndProvider } from "react-dnd"
+import { HTML5Backend } from 'react-dnd-html5-backend'
+import TodoListWrapper from "@/components/TodoList/TodoListWrapper"
+import { cn } from "@/helpers"
 
 export default function Home(): JSX.Element {
   const [inputValue, setInputValue] = useState('')
@@ -44,8 +47,9 @@ export default function Home(): JSX.Element {
           id: nanoid(),
           name: inputValue,
           isDone: false,
-          createdOn: new Date().getTime(),
-          lastUpdate: null
+          createdOn: new Date().getTime(), 
+          lastUpdate: null,
+          isImportant: undefined
         }))
       clearInput()
     }
@@ -62,6 +66,13 @@ export default function Home(): JSX.Element {
     }
   }
 
+  const handleStatusMove = (
+    id: string,
+    importance: boolean | undefined
+  ) : void=> {
+    dispatch(setImportance({id, importance}))
+  }
+
   return ( 
     <main className={styles.main}>
       <Header />
@@ -69,7 +80,20 @@ export default function Home(): JSX.Element {
         <Input value={inputValue} setValue={setInputValue} onKeydown={onKeyDown} maxLength={currentMaxLength} isError={currentMaxLength === inputValue.length} />
         <Actions onCreate={createItem} />
       </FlexBox>
-      <TodoList />
+      {/* This will be shown only on 1400+ width monitors due to content visibility*/}
+      <FlexBox className={cn(styles.content, styles.desktopOnly)}>
+        <DndProvider backend={HTML5Backend}>
+          <TodoListWrapper importance={false} onMove={handleStatusMove} />
+          <TodoListWrapper importance={undefined} onMove={handleStatusMove}/>
+          <TodoListWrapper importance={true} onMove={handleStatusMove} />
+        </DndProvider>
+      </FlexBox>
+      {/* This will be shown on other devices */}
+      <FlexBox className={cn(styles.content, styles.mobile)}>
+        <DndProvider backend={HTML5Backend}>
+          <TodoListWrapper importance={undefined} />
+        </DndProvider>
+      </FlexBox>
       <Footer />
     </main>
   )

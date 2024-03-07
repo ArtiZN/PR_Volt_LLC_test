@@ -47,6 +47,7 @@ export interface TodoItem {
   isDone: boolean
   createdOn: number
   lastUpdate: number | null
+  isImportant: boolean | undefined
 }
 
 export interface TodoItemsSliceState {
@@ -77,8 +78,8 @@ export const todoListSlice = createAppSlice({
           isDone: !item?.isDone, 
           lastUpdate: new Date().getTime()
         }
+        saveToLs(LS_ITEMS_KEY, state.items)
       }
-      saveToLs(LS_ITEMS_KEY, state.items)
     }),
     removeItem: create.reducer((state, action: PayloadAction<string>) => {
       state.items = state.items.filter(({id}) => id !== action.payload)
@@ -92,6 +93,18 @@ export const todoListSlice = createAppSlice({
       state.maxLength = action.payload
       saveToLs(LS_LENGTH_KEY, action.payload)
     }),
+    setImportance: create.reducer((state, action: PayloadAction<{id: string, importance: boolean | undefined}>) => {
+      const index = state.items.findIndex((i) => i.id === action.payload.id)
+      const item = state.items[index]
+      if (item) {
+        state.items[index] = {
+          ...item, 
+          isImportant: action.payload.importance, 
+          lastUpdate: new Date().getTime()
+        }
+        saveToLs(LS_ITEMS_KEY, state.items)
+      }
+    })
   }),
   selectors: {
     selectTodoItems: (state) => filteredItems(state.items, state.filter),
@@ -103,7 +116,7 @@ export const todoListSlice = createAppSlice({
 })
 
 // Action creators are generated for each case reducer function.
-export const { initialLoad, addItem, toggleDone, removeItem, setFilters, setMaxLength } =
+export const { initialLoad, addItem, toggleDone, removeItem, setFilters, setMaxLength, setImportance } =
   todoListSlice.actions
 
 // Selectors returned by `slice.selectors` take the root state as their first argument.

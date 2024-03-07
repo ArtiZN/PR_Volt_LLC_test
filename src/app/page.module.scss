@@ -10,3 +10,43 @@
     justify-content: center;
     align-items: center;
 }
+
+.borderContainer {
+    position: relative;
+    margin-top: 25px;
+    padding: 20px;
+    border: 8px dashed #2B2D42;
+    border-radius: 20px; 
+    height: calc(100% - 40px);
+}
+
+.borderContainerTitle {
+    position: absolute;
+    left: 50%;
+    top: -10px;
+    transform: translate(-50%, -50%);
+    font-size: 36px;
+    color: #2B2D42;
+    background-color: #EDF2F4;
+}
+
+.content {
+    padding: 0 20px;
+    width: 100%;
+    box-sizing: border-box;
+    justify-content: space-evenly;
+    height: 100%;
+    overflow: hidden;
+}
+
+
+@media screen and (max-width: 1500px) {
+    .desktopOnly {
+        display: none;
+    }
+}
+@media screen and (min-width: 1500px) {
+    .mobile {
+        display: none;
+    }
+}
