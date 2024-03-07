@@ -15,24 +15,27 @@ import Footer from "../components/Footer"
 export default function Home(): JSX.Element {
   const [inputValue, setInputValue] = useState('')
 
-  const { filter, items, maxLength } = useInitialLoad()
+  const { filter, items, maxLength, isLoaded } = useInitialLoad()
 
   const dispatch = useAppDispatch()
   const currentMaxLength = useAppSelector(selectMaxLength)
 
   useEffect(() => {
-    if (filter !== 'All') {
+    if (filter !== 'All' && isLoaded) {
       dispatch(setFilters(filter))
     }
-  },[dispatch, filter])
+  },[dispatch, filter, isLoaded])
+
+  useEffect(() => { 
+    if (isLoaded)
+      dispatch(initialLoad(items))
+  },[dispatch, items, isLoaded])
 
   useEffect(() => {
-    dispatch(initialLoad(items))
-  },[dispatch, items])
-
-  useEffect(() => {
-    dispatch(setMaxLength(maxLength))
-  },[dispatch, maxLength])
+    if (isLoaded) {
+      dispatch(setMaxLength(maxLength))
+    }
+  },[dispatch, maxLength, isLoaded])
 
   const createItem = (): void => {
     if (inputValue) {

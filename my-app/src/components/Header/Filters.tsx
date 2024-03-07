@@ -6,6 +6,8 @@ import SettingsSuggestIcon from '@mui/icons-material/SettingsSuggest'
 
 import styles from './styles.module.scss'
 import { shallowEqual } from "react-redux"
+import SettingsModal from "../Modal/SettingsModal"
+import { useState } from "react"
 
 const actions: Filter[] = ['All', 'Current', 'Complete']
 
@@ -29,6 +31,8 @@ interface Props {
 }
 const Filters = ({className}: Props): JSX.Element => {
 
+  const [isSettingsModalVisible, setSettingsModalVisible] = useState<boolean>(false)
+
   const mode = useAppSelector(selectTodoFilters, shallowEqual)
   const dispatch = useAppDispatch()
 
@@ -38,11 +42,19 @@ const Filters = ({className}: Props): JSX.Element => {
     } else
       dispatch(setFilters(action))
   }
-  return <FlexBox className={className}>
-    <SettingsSuggestIcon className={styles.settings} />
-    {actions.map((action) => 
-      <FilterItem key={action} onClick={() => onClick(action)} name={action} isActive={mode === action }/>)}
-  </FlexBox>
+
+  const onShowSettingsModal = (): void => {
+    setSettingsModalVisible(true)
+  }
+
+  return <>
+    <FlexBox className={className}>
+      <SettingsSuggestIcon className={styles.settings} onClick={onShowSettingsModal} />
+      {actions.map((action) => 
+        <FilterItem key={action} onClick={() => onClick(action)} name={action} isActive={mode === action }/>)}
+    </FlexBox>
+    <SettingsModal setModalVisible={setSettingsModalVisible} isModalVisible={isSettingsModalVisible} />
+  </>
 }
 
 export default Filters
