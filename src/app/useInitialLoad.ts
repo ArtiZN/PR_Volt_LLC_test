@@ -19,7 +19,7 @@ const useInitialLoad = (): Return => {
     const items = localStorage.getItem(LS_ITEMS_KEY)
     const filter = localStorage.getItem(LS_FILTERS_KEY)
     const maxLength = localStorage.getItem(LS_LENGTH_KEY)
-    console.log(items, filter, maxLength)
+  
     if (items) {
       const value = JSON.parse(items)
       setItems(value)

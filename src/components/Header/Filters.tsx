@@ -51,7 +51,7 @@ const Filters = ({className}: Props): JSX.Element => {
     <FlexBox className={className}>
       <SettingsSuggestIcon className={styles.settings} onClick={onShowSettingsModal} />
       {actions.map((action) => 
-        <FilterItem key={action} onClick={() => onClick(action)} name={action} isActive={mode === action }/>)}
+        <FilterItem key={action} onClick={(): void => onClick(action)} name={action} isActive={mode === action }/>)}
     </FlexBox>
     <SettingsModal setModalVisible={setSettingsModalVisible} isModalVisible={isSettingsModalVisible} />
   </>
