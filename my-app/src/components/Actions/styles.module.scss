@@ -1,0 +1,16 @@
+.add {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    transition: 0.7s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    line-height: 40px;
+    font-size: 24px;
+    color: #8894AA;
+    &:hover {
+        background-color: #DBDFE6;
+    }
+}

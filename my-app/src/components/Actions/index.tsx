@@ -1,25 +1,13 @@
-import { addItem } from "../../store/todoListSlice"
-import { useAppDispatch } from "../../store/hooks"
-import { nanoid } from "nanoid"
+import styles from './styles.module.scss'
 
 interface Props {
-  value: string
+  onCreate: () => void
 }
 
-const Actions = ({value}: Props): JSX.Element => {
-
-  const dispatch = useAppDispatch()
-
-  const onClick = (): void => {
-    dispatch(addItem({
-      id: nanoid(),
-      name: value,
-      isDone: false
-    }))
-  }
-  return <div>
-    <button onClick={onClick}>+</button>
+const Actions = ({ onCreate }: Props): JSX.Element => 
+  <div className={styles.add} onClick={onCreate}>
+    +
   </div>
-}
+
 
 export default Actions

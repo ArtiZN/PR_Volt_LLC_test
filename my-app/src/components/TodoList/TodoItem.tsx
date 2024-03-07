@@ -1,8 +1,8 @@
 import { useAppDispatch } from "../../store/hooks"
 import { TodoItem, removeItem, toggleDone } from "../../store/todoListSlice"
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever'
-import FlexBox from "../Flexbox"
 import styles from './styles.module.scss'
+import { cn } from "../../helpers"
 
 interface Props {
   item: TodoItem
@@ -21,10 +21,10 @@ const TodoItem = ({item}: Props): JSX.Element => {
     dispatch(removeItem(item.id))
   }
   
-  return <FlexBox onClick={onToggle} className={styles.row} styles={{ ...item.isDone ? { textDecoration: 'line-through' } : {} }}>
+  return <li onClick={onToggle} className={cn(styles.row, styles.todoItem, item.isDone && styles.done)}>
     {item.name}
     <DeleteForeverIcon onClick={onDelete} />
-  </FlexBox>
+  </li>
 }
 
 export default TodoItem

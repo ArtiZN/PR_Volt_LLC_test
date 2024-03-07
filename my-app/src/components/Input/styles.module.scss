@@ -1,0 +1,19 @@
+.input {
+    width: 370px;
+    height: 70px;
+    outline: none;
+    border: none;
+    background: transparent;
+    font-size: 34px;
+    color: #2B2D42;
+    border-bottom: 1px solid transparent;
+    padding: 5px 10px;
+    border-radius: 8px;
+    &::placeholder {
+        color: #CFD4DE;
+    }
+}
+
+.error {
+    border-bottom: 1px solid #EF233C;
+}
